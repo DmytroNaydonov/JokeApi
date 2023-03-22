@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    cucumberVersion = '7.11.1'
+    jacksonVersion = '2.15.0-rc1'
+    restassuredVersion = '5.3.0'
+}
+
+dependencies {
+    testImplementation "io.rest-assured:rest-assured:${restassuredVersion}"
+    testImplementation "io.rest-assured:json-schema-validator:${restassuredVersion}"
+    testImplementation 'org.testng:testng:7.7.1'
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-testng:${cucumberVersion}"
+    runtimeOnly "io.cucumber:cucumber-picocontainer:${cucumberVersion}"
+    testImplementation 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+    testImplementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+    testImplementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+    testImplementation 'org.yaml:snakeyaml:2.0'
+}
