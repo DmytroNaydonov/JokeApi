@@ -4,7 +4,9 @@ import lombok.val;
 
 import java.io.InputStream;
 
-public class ResourceUtils {
+public final class ResourceUtils {
+
+    private ResourceUtils() { }
 
     public static <T> InputStream readAsStream(String path, Class<T> type) {
         val is = type.getResourceAsStream("/" + path);

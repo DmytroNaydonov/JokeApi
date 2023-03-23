@@ -9,11 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JsonUtils {
+public final class JsonUtils {
 
     private static final String REF_KEYWORD = "$ref";
     private static final String SELF_REFERENCE_KEYWORD = "#";
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    private JsonUtils() { }
 
     @SneakyThrows
     public static String readJsonSchema(String path) {
