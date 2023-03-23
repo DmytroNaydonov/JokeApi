@@ -8,7 +8,7 @@ import lombok.val;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static utils.ResourceUtils.readAsStream;
+import static utils.JsonUtils.readJsonSchema;
 
 public class HttpSteps {
 
@@ -26,7 +26,7 @@ public class HttpSteps {
 
     @And("returned JSON should match the schema {string}")
     public void returnedJSONShouldMatchTheSchema(String schemaFilePath) {
-        val is = readAsStream(schemaFilePath, HttpSteps.class);
-        scenarioContext.getLastResponse().assertThat().body(matchesJsonSchema(is));
+        val schema = readJsonSchema(schemaFilePath);
+        scenarioContext.getLastResponse().assertThat().body(matchesJsonSchema(schema));
     }
 }

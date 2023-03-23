@@ -20,7 +20,7 @@ public class JokeSteps {
 
     private final JokeService jokeService;
     private final HttpScenarioContext scenarioContext;
-    private final ObjectMapper om = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public JokeSteps(HttpScenarioContext scenarioContext,
                      JokeService jokeService) {
@@ -52,7 +52,7 @@ public class JokeSteps {
     @And("joke is valid")
     public void jokeIsValid() {
         val httpResponse = scenarioContext.getLastResponse().extract().body().asString();
-        val apiResponse = om.readValue(httpResponse, Joke.class);
+        val apiResponse = OBJECT_MAPPER.readValue(httpResponse, Joke.class);
         assertThat(apiResponse.getId(), is(not(nullValue())));
     }
 
@@ -60,7 +60,7 @@ public class JokeSteps {
     @And("all jokes are valid")
     public void allJokesAreValid() {
         val httpResponse = scenarioContext.getLastResponse().extract().body().asInputStream();
-        val apiResponse = om.readValue(httpResponse, new TypeReference<List<Joke>>() { });
+        val apiResponse = OBJECT_MAPPER.readValue(httpResponse, new TypeReference<List<Joke>>() { });
         assertThat(apiResponse, is(not(empty())));
         apiResponse.forEach(r -> assertThat(r.getId(), is(not(nullValue()))));
     }
@@ -74,7 +74,7 @@ public class JokeSteps {
     @And("message with type {string} should say {string}")
     public void errorMessageIsCorrect(String type, String message) {
         val httpResponse = scenarioContext.getLastResponse().extract().body().asInputStream();
-        val apiResponse = om.readValue(httpResponse, JokeMessage.class);
+        val apiResponse = OBJECT_MAPPER.readValue(httpResponse, JokeMessage.class);
         assertThat(apiResponse.getType(), is(type));
         assertThat(apiResponse.getMessage(), is(message));
     }
@@ -83,7 +83,7 @@ public class JokeSteps {
     @And("response should be empty")
     public void responseShouldBeEmpty() {
         val httpResponse = scenarioContext.getLastResponse().extract().body().asInputStream();
-        val apiResponse = om.readValue(httpResponse, new TypeReference<List<Joke>>() { });
+        val apiResponse = OBJECT_MAPPER.readValue(httpResponse, new TypeReference<List<Joke>>() { });
         assertThat(apiResponse, is(empty()));
     }
 }
